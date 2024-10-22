@@ -26,9 +26,9 @@ def move_towards(a: tuple, b: tuple, L: float) -> tuple:
     # return result
 
 # Example usage:
-a = (1, 2, 3)
-b = (4, 6, 8)
-L = 5
+# a = (1, 2, 3)
+# b = (4, 6, 8)
+# L = 5
 
-result = move_towards(a, b, L)
-print(result)
+# result = move_towards(a, b, L)
+# print(result)
