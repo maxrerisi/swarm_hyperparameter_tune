@@ -20,7 +20,7 @@ def move_towards(a: tuple, b: tuple, L: float) -> tuple:
     scaled_vector = tuple(L * u_i for u_i in unit_vector)
     
     # Step 5: Return the final position after moving L units
-    return scaled_vector
+    return scaled_vector # returns the coords to move, not the new coords
     # result = tuple(a_i + s_i for a_i, s_i in zip(a, scaled_vector))
     
     # return result
