@@ -7,7 +7,9 @@ charset-normalizer==3.4.0
 frozenlist==1.4.1
 idna==3.10
 joblib==1.4.2
+maxpackage @ git+https://github.com/maxrerisi/max-package.git@7143d210287e518b9b1d00bddfc8714a45106260
 multidict==6.1.0
+myPackage @ git+https://github.com/maxrerisi/max-package2.git@e3e27c72afecef2af0d5f5d2b440f6156ceb275e
 numpy==2.1.2
 oauthlib==3.2.2
 pandas==2.2.3
@@ -16,6 +18,7 @@ python-dateutil==2.9.0.post0
 pytz==2024.2
 pyzmq==26.2.0
 requests==2.32.3
+schedule==1.2.2
 scikit-learn==1.5.2
 scipy==1.14.1
 six==1.16.0

@@ -7,7 +7,7 @@ print("\033[0m")
 
 os.system("pip freeze > requirements.txt")
 os.system("git add .")
-os.system(f'git commit -m "{commit_msg} test"')
+os.system(f'git commit -m "{commit_msg}"')
 os.system("git push")
 
-print("\033[32mPushed Successfully.\033[0m")  # Green text
+print("\033[32mPushed Successfully.\033[0m")

@@ -1,14 +1,27 @@
 from swarm_member import SwarmMember
 from paramsToPos import paramsToPos, posToParams
 from random_params import get_random_params
+import schedule
 
 MEMBER_COUNT = 10
 SWARM = []
 SCORES = []
 LOOP = 50
 
+def check_jobs():
+    schedule.run_pending()
 
-def update_file(iter,mem):
+def write_interim(iter, mem):
+    with open("interim_text.txt", 'w') as fp:
+        fp.write(f"{iter},{mem}")
+
+def read_interim():
+    with open("interim_text.txt", 'r') as fp:
+        out = fp.read().split(',')
+        return (int(out[0]), int(out[1]))
+
+def update_file():
+        iter, mem = read_interim()
         with open("tracker.md", 'w') as fp:
             out = f"<h1> Info: </h1>Iteration: {iter+1} / {LOOP}<br> Member {mem} out of {MEMBER_COUNT} members."
             out += f"<h2> Best Score: </h2>{str(swarm_best_score)} {best_info}<br>Mean move: {mean_move:.2f}"
@@ -25,11 +38,14 @@ def update_file(iter,mem):
 
             fp.write(out)
 
+schedule.every(1).seconds.do(update_file)
+
+
 swarm_best_pos = paramsToPos(get_random_params())
 swarm_best_score = -1
 best_info = ""
 mean_move = 0
-update_file(-1,0)
+write_interim(-1,0)
 for a in range(MEMBER_COUNT):
     with open("tracker.md", 'w') as fp:
         fp.write(f"Creating swarm: {a+1}/{MEMBER_COUNT}")
@@ -41,7 +57,8 @@ for a in range(MEMBER_COUNT):
 
 
 for iter in range(LOOP):
-    update_file(iter,0)
+    write_interim(iter,0)
+    check_jobs()
     movements = []
     for dex, member in enumerate(SWARM):
         member: SwarmMember = member
@@ -53,7 +70,8 @@ for iter in range(LOOP):
             best_info = f"Achieved by: member {dex} in iteration {iter + 1}"
         SCORES.append(scr)
         if dex % 1 == 0:
-            update_file(iter,dex)
+            write_interim(iter,dex)
+            check_jobs()
     mean_move = sum(movements)/len(movements)
 
 # TODO use schedule library to update it every 5 seconds
