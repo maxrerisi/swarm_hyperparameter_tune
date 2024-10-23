@@ -10,9 +10,7 @@ def paramsToPos(params) -> tuple:
 
 def posToParams(pos) -> dict:
     out = {}
-    print(CHANGING_PARAMS, pos)
     for a, b in enumerate(pos):
-        print(a)
         out[CHANGING_PARAMS[a]] = b
     for a in DEFAULT_HYPERPARAMETERS:
         if a not in out:

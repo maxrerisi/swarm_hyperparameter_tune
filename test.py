@@ -1,6 +1,4 @@
-a = (1, 2, 3)
-b = (1, 2, 3)
-print(a+b)
-print(tuple(a[x] + b[x] for x in range(len(a))))
-a[0] = 4
-print(a)
+import random
+x = [(1,1),(2,2),(3,3)]
+
+print(random.choices(x, k=10))

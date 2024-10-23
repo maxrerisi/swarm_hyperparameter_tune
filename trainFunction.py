@@ -53,6 +53,17 @@ def train_xgboost(hyperparam):
     X = df.drop("admission", axis=1).to_numpy()
     y = df['admission'].to_numpy()
 
+    data = list((a, b) for a, b in zip(X, y))
+    data = random.choices(data, k=len(y))
+    X = []
+    y = []
+    for a, b in data:
+        X.append(a)
+        y.append(b)
+    
+    X = np.array(X)
+    y = np.array(y)
+
     p = np.random.permutation(len(y))
     X = X[p]
     y = y[p]
