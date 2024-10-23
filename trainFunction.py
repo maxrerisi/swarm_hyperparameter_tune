@@ -4,7 +4,7 @@ import xgboost as xgb
 import random
 import os
 from sklearn.metrics import roc_auc_score as auc
-from main import BOOSTING_ROUNDS, FOLD_COUNT
+from parameter_file import BOOSTING_ROUNDS, FOLD_COUNT
 
 
 def seed_everything(seed):
