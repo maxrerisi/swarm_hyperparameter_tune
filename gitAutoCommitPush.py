@@ -1,6 +1,5 @@
 import os
 
-
 # commit_msg = input("\033[34mCommit Message > \033[0m")
 
 commit_msg = input("\033[34mCommit Message > ")
