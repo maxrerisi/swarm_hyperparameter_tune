@@ -2,11 +2,13 @@ from swarm_member import SwarmMember
 from paramsToPos import paramsToPos, posToParams
 from random_params import get_random_params
 import schedule
+import time
+from parameter_file import NUMBER_OF_ROUNDS, MEMBER_COUNT
 
-MEMBER_COUNT = 10
 SWARM = []
 SCORES = []
-LOOP = 50
+LOOP = NUMBER_OF_ROUNDS
+start = time.time()
 
 def check_jobs():
     schedule.run_pending()
@@ -23,7 +25,7 @@ def read_interim():
 def update_file():
         iter, mem = read_interim()
         with open("tracker.md", 'w') as fp:
-            out = f"<h1> Info: </h1>Iteration: {iter+1} / {LOOP}<br> Member {mem} out of {MEMBER_COUNT} members."
+            out = f"<h1> Info: </h1>Iteration: {iter+1} / {LOOP}<br> Member {mem} out of {MEMBER_COUNT} members.<br>Time: {time.time()-start:.2f} seconds"
             out += f"<h2> Best Score: </h2>{str(swarm_best_score)} {best_info}<br>Mean move: {mean_move:.2f}"
             out += "<br>"
             out += "<h2> Parameters:</h2>"
@@ -53,9 +55,6 @@ for a in range(MEMBER_COUNT):
     SWARM.append(member)
 
 
-
-
-
 for iter in range(LOOP):
     write_interim(iter,0)
     check_jobs()
@@ -74,5 +73,4 @@ for iter in range(LOOP):
             check_jobs()
     mean_move = sum(movements)/len(movements)
 
-# TODO use schedule library to update it every 5 seconds
-# TODO bootstrap dataset
+
