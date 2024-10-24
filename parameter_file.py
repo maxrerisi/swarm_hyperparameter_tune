@@ -21,13 +21,24 @@ DEFAULT_HYPERPARAMETERS = {
 CHANGING_PARAMS = ["max_depth", "eta", "min_child_weight", "alpha",
                    "gamma", "lambda", "scale_pos_weight", "num_parallel_tree"]
 
-NUMBER_OF_ROUNDS = 250
-MEMBER_COUNT = 10
+NUMBER_OF_ROUNDS = 1000
+MEMBER_COUNT = 25
 
-BOOSTING_ROUNDS = 75
-FOLD_COUNT = 5
+BOOSTING_ROUNDS = 10
+FOLD_COUNT = 1 # if 1, assumes a 80:20 split
 
-RANDOM_MAGNITUDE = 10
-SELF_BEST_MAGNITUDE = 10
-SWARM_BEST_MAGNITUDE = 10
+RANDOM_MAGNITUDE = 1
+SELF_BEST_MAGNITUDE = 1
+SWARM_BEST_MAGNITUDE = 1
 
+#TODO comment this file
+#TODO use other metrics
+#TODO net displacement (on average)
+#TODO visualizing how they are spaced, bc:
+# 7: (47, 1, 69, 23, 24, 88, 16, 5) 0.870335 69.897537
+# 8: (38, 1, 67, 20, 49, 24, 9, 5) 0.872823 70.055718
+# 9: (66, 1, 15, 22, 41, 30, 10, 4) 0.873344 60.488845
+# 10: (78, 0, 23, 16, 23, 85, 15, 5) 0.874490 60.233888
+# got those results using 1 for all the magnitudes, they must be far apart, no?
+# A way of changing vector weights mid program?
+#TODO what about the case where the bootstrap is just lucky and the AUC is actually junk?

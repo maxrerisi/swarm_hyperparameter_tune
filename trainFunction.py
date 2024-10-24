@@ -71,17 +71,20 @@ def train_xgboost(hyperparam):
     fold_size = int(len(y) / FOLD_COUNT)
 
     out = []
-    for j in range(FOLD_COUNT):
-        start = j * fold_size
-        end = (j + 1) * fold_size
-        if j == FOLD_COUNT - 1:
-            X_train, X_test = X[:start], X[start:]
-            y_train, y_test = y[:start], y[start:]
-        else:
-            X_train, X_test = [*X[:start], *X[end:]], X[start:end]
-            y_train, y_test = [*y[:start], *y[end:]], y[start:end]
-        sub_out = (X_train, y_train, X_test, y_test)
-        out.append(tuple([np.array(a) for a in sub_out]))
+    if FOLD_COUNT == 1:
+        out.append(tuple([X[:int(len(y)*.8)], y[:int(len(y)*.8)], X[int(len(y)*.8):],y[int(len(y)*.8):]]))
+    else:
+        for j in range(FOLD_COUNT):
+            start = j * fold_size
+            end = (j + 1) * fold_size
+            if j == FOLD_COUNT - 1:
+                X_train, X_test = X[:start], X[start:]
+                y_train, y_test = y[:start], y[start:]
+            else:
+                X_train, X_test = [*X[:start], *X[end:]], X[start:end]
+                y_train, y_test = [*y[:start], *y[end:]], y[start:end]
+            sub_out = (X_train, y_train, X_test, y_test)
+            out.append(tuple([np.array(a) for a in sub_out]))
 
     predictions = []
     for fold in out:
@@ -94,8 +97,9 @@ def train_xgboost(hyperparam):
                               early_stopping_rounds=1000)
         predictions += list(xgb_model.predict(
             dtest, iteration_range=(0, xgb_model.best_iteration + 1)))
-
-    return auc(y, predictions)
+    if FOLD_COUNT != 1:
+        return auc(y, predictions)
+    return auc(y[int(len(y)*.8):],predictions)
 
 
 print(train_xgboost(hyperparam))

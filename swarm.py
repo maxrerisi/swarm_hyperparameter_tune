@@ -5,6 +5,8 @@ import schedule
 import time
 from parameter_file import NUMBER_OF_ROUNDS, MEMBER_COUNT
 from ascii_loading_bar import ascii_loading_bar
+from trainFunction import train_xgboost
+from aToBLLength import euclidean_distance
 
 SWARM = []
 SCORES = []
@@ -23,11 +25,20 @@ def read_interim():
         out = fp.read().split(',')
         return (int(out[0]), int(out[1]))
 
+
+swarm_best_pos = paramsToPos(get_random_params())
+swarm_best_score = train_xgboost(posToParams(swarm_best_pos))
+best_info = ""
+mean_move = 0
+swarm_bests = [(swarm_best_pos, swarm_best_score, 0,0)]
+
 def update_file():
         iter, mem = read_interim()
         with open("tracker.md", 'w') as fp:
             out = f"<h1> Info: </h1>Iteration: {iter+1} / {LOOP} {ascii_loading_bar(iter+1, LOOP)}<br> Member {mem} out of {MEMBER_COUNT} members. {ascii_loading_bar(mem, MEMBER_COUNT)}<br>Time: {time.time()-start:.2f} seconds"
-            out += f"<h2> Best Score: </h2>{str(swarm_best_score)} {best_info}<br>Mean move: {mean_move:.2f}"
+            out += f"<h2> Best Score: </h2>{str(swarm_best_score)} {best_info}<br>Mean move: {mean_move:.2f} <h3>Move History</h3>"
+            for dex, (a, b, c, d) in enumerate(swarm_bests):
+                out += f"{dex}: {tuple(round(z) for z in a)} \t {b:.6f} \t {c:.6f} \t {d:.6f}<br>"
             out += "<br>"
             out += "<h2> Parameters:</h2>"
             out += "<p>"
@@ -44,10 +55,7 @@ def update_file():
 schedule.every(1).seconds.do(update_file)
 
 
-swarm_best_pos = paramsToPos(get_random_params())
-swarm_best_score = -1
-best_info = ""
-mean_move = 0
+
 write_interim(-1,0)
 for a in range(MEMBER_COUNT):
     with open("tracker.md", 'w') as fp:
@@ -64,7 +72,8 @@ for iter in range(LOOP):
         member: SwarmMember = member
         movements.append(member.move(swarm_best_pos))
         scr = member.getLatestScore()["score"]
-        if scr > swarm_best_score:
+        if scr >= swarm_best_score:
+            swarm_bests.append((member.getPos(), scr, euclidean_distance(swarm_best_pos, member.getPos()), euclidean_distance(member.getPos(), tuple(0 for _ in range(len(swarm_best_pos))))))
             swarm_best_score = scr
             swarm_best_pos = member.getPos()
             best_info = f"Achieved by: member {dex} in iteration {iter + 1}"
