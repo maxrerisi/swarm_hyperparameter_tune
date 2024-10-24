@@ -1,3 +1,5 @@
 # Using Swarm Intelligence to Converge on Optimal Hyperparameters
 
-By me.
+Use parameter_file.py to edit parameters and such.
+
+Run swarm.py for things to actually happen. Open the resulting tracker.md for information.

@@ -4,6 +4,7 @@ from random_params import get_random_params
 import schedule
 import time
 from parameter_file import NUMBER_OF_ROUNDS, MEMBER_COUNT
+from ascii_loading_bar import ascii_loading_bar
 
 SWARM = []
 SCORES = []
@@ -25,7 +26,7 @@ def read_interim():
 def update_file():
         iter, mem = read_interim()
         with open("tracker.md", 'w') as fp:
-            out = f"<h1> Info: </h1>Iteration: {iter+1} / {LOOP}<br> Member {mem} out of {MEMBER_COUNT} members.<br>Time: {time.time()-start:.2f} seconds"
+            out = f"<h1> Info: </h1>Iteration: {iter+1} / {LOOP} {ascii_loading_bar(iter+1, LOOP)}<br> Member {mem} out of {MEMBER_COUNT} members. {ascii_loading_bar(mem, MEMBER_COUNT)}<br>Time: {time.time()-start:.2f} seconds"
             out += f"<h2> Best Score: </h2>{str(swarm_best_score)} {best_info}<br>Mean move: {mean_move:.2f}"
             out += "<br>"
             out += "<h2> Parameters:</h2>"
@@ -50,7 +51,7 @@ mean_move = 0
 write_interim(-1,0)
 for a in range(MEMBER_COUNT):
     with open("tracker.md", 'w') as fp:
-        fp.write(f"Creating swarm: {a+1}/{MEMBER_COUNT}")
+        fp.write(f"Creating swarm: {a+1}/{MEMBER_COUNT}<br>{ascii_loading_bar(a+1, MEMBER_COUNT)}")
     member = SwarmMember(a)
     SWARM.append(member)
 

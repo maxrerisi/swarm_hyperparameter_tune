@@ -21,13 +21,13 @@ DEFAULT_HYPERPARAMETERS = {
 CHANGING_PARAMS = ["max_depth", "eta", "min_child_weight", "alpha",
                    "gamma", "lambda", "scale_pos_weight", "num_parallel_tree"]
 
-NUMBER_OF_ROUNDS = 50
+NUMBER_OF_ROUNDS = 250
 MEMBER_COUNT = 10
 
 BOOSTING_ROUNDS = 75
 FOLD_COUNT = 5
 
 RANDOM_MAGNITUDE = 10
-SELF_BEST_MAGNITUDE = 5
-SWARM_BEST_MAGNITUDE = 7.5
+SELF_BEST_MAGNITUDE = 10
+SWARM_BEST_MAGNITUDE = 10
 
