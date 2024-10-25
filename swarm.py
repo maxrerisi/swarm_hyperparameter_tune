@@ -46,13 +46,13 @@ def update_file():
                 out += str(a)
                 out += f": {b}, "
                 # out += "<br>"
-            out += "</p><h2> Scores:</h2>"
-            for scr in SCORES:
-                out += f"{scr}<br>"
+            # out += "</p><h2> Scores:</h2>"
+            # for scr in SCORES:
+            #     out += f"{scr}<br>"
 
             fp.write(out)
 
-schedule.every(1).seconds.do(update_file)
+schedule.every(5).seconds.do(update_file)
 
 
 

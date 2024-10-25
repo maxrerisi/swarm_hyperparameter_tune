@@ -21,13 +21,13 @@ DEFAULT_HYPERPARAMETERS = {
 CHANGING_PARAMS = ["max_depth", "eta", "min_child_weight", "alpha",
                    "gamma", "lambda", "scale_pos_weight", "num_parallel_tree"]
 
-NUMBER_OF_ROUNDS = 1000
-MEMBER_COUNT = 25
+NUMBER_OF_ROUNDS = 100000
+MEMBER_COUNT = 10
 
-BOOSTING_ROUNDS = 10
-FOLD_COUNT = 1 # if 1, assumes a 80:20 split
+BOOSTING_ROUNDS = 15
+FOLD_COUNT = 5 # if 1, assumes a 80:20 split
 
-RANDOM_MAGNITUDE = 1
+RANDOM_MAGNITUDE = 5
 SELF_BEST_MAGNITUDE = 1
 SWARM_BEST_MAGNITUDE = 1
 
@@ -42,3 +42,6 @@ SWARM_BEST_MAGNITUDE = 1
 # got those results using 1 for all the magnitudes, they must be far apart, no?
 # A way of changing vector weights mid program?
 #TODO what about the case where the bootstrap is just lucky and the AUC is actually junk?
+#TODO average member best?
+#TODO use this in a kaggle comp
+    #TODO make a real repo first tho
